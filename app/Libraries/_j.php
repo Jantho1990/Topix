@@ -1,5 +1,5 @@
 <?php
-namespace _j;
+namespace App\Libraries;
 ### Common custom functions ###
 
 class _j {
@@ -10,7 +10,7 @@ class _j {
   * @param $str The base string.
   * @return String
   */
-  public function replaceAll($keyvals, $str){
+  public static function replaceAll($keyvals, $str){
     $ret = $str;
     foreach($keyvals as $key=>$val){
       $ret = str_replace($key, $val, $ret);
@@ -25,11 +25,11 @@ class _j {
   * @param $all If true, function only returns true if all strings are found.
   * @return Boolean
   */
-  public function find($find, $str, $all = false){
+  public static function find($find, $str, $all = false){
     if(is_string($find)){trim($find = explode(',', $find));}
     $found = false;
     foreach($find as $val){
-      if(!strpos($val, $str)){
+      if(!strpos($str, $val)){
         $found = false;
         if($all === true){break;}
       }else{

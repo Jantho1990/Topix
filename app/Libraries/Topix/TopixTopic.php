@@ -1,5 +1,6 @@
 <?php
 namespace App\Libraries\Topix;
+use App\Libraries\_j;
 use Ddeboer\Imap\Server;
 use Ddeboer\Imap\SearchExpression;
 use Ddeboer\Imap\Search\Email\To;
@@ -7,7 +8,7 @@ use Ddeboer\Imap\Search\Email\FromAddress;
 use Ddeboer\Imap\Search\Text\Body;
 
 class TopixTopic {
-  private $id = null;
+  private $db_id = null;
   private $email_id = null;
   private $title = null;
   private $body = null;
@@ -17,21 +18,24 @@ class TopixTopic {
 
   public function __construct(){
     $arguments = func_get_args();
-    if(!is_null($arguments)){
+    if(!(count($arguments) === 0)){
       $this->__set($arguments);
     }
   }
 
-  public function __set($key, $val){
+  public function __set($key, $val=null){
     if(is_array($key)){
       foreach($key as $k=>$kv){
-        if(property_exists($this, $k)){
-          $this[$k] = $kv;
+        if(is_numeric($k)){
+          $kk = array_keys(get_object_vars($this))[$k];
+          $this->$kk = $kv;
+        }elseif(property_exists($this, $k)){
+          $this->$k = $kv;
         }
       }
     }else{
       if(property_exists($this, $key)){
-        $this[$key] = $val;
+        $this->$key = $val;
       }
     }
   }
@@ -41,7 +45,7 @@ class TopixTopic {
       return get_object_vars($this);
     }else{
       if(property_exists($this, $key)){
-        return $this[$key];
+        return $this->$key;
       }else{
         return null;
       }
@@ -56,8 +60,8 @@ class TopixTopic {
     $email_id = $message->getId();
     $title = $this->getTitle($message);
     $body = $message->getBodyText();
-    $categories = $this->getCategories($body);
-    $tags = $this->findTags($body);
+    $categories = $this->findCategoriesEmail($body);
+    $tags = $this->findTagsEmail($body);
     $date = $message->getDate();
     $topic = [
       'email_id' => $email_id,
@@ -117,7 +121,7 @@ class TopixTopic {
       "\r" => ''
     ];
     $tags = false;
-    foreach($bodyArray as $lines){
+    foreach($bodyArray as $line){
       $cleanLine = _j::replaceAll($rep, $line);
       if(_j::find(['tags:', 'tag:'], $cleanLine)){
         $tags = explode(',', $cleanLine);
@@ -142,7 +146,7 @@ class TopixTopic {
       "\r" => ''
     ];
     $categories = false;
-    foreach($bodyArray as $lines){
+    foreach($bodyArray as $line){
       $line = _j::replaceAll($rep, $line);
       if(_j::find(['categories:', 'category:'], $line)){
         $categories = explode(',', $categories);

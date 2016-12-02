@@ -7,6 +7,8 @@ use Ddeboer\Imap\Search\Email\To;
 use Ddeboer\Imap\Search\Email\FromAddress;
 use Ddeboer\Imap\Search\Text\Body;
 
+use App\Libraries\Topix\TopixTopic;
+
 // TopixAccount: the mailbox which you are sending Topix emails to.
 
 class TopixAccount {
@@ -17,9 +19,12 @@ class TopixAccount {
 
   private $connection = null;
   private $emails = null;
+  private $topics = null;
 
   public function __construct(){
     $arguments = func_get_args();
+    $this->emails = [];
+    $this->topics = [];
     if(!(count($arguments) === 0)){
       $this->__set($arguments);
       $this->getAuthenticatedConnection($this->domain, $this->username, $this->password);
@@ -68,6 +73,7 @@ class TopixAccount {
    *
    */
   public function getEmails(){
+    $this->parseTopixEmailAddresses();
     $this->emails = [];
     // We should only need to access the inbox.
     $mailbox = $this->connection->getMailbox('INBOX');
@@ -94,6 +100,11 @@ class TopixAccount {
    *
    */
   public function parseTopixEmailAddresses(){
+    // If there aren't any emails set, throw a fit.
+    if(is_null($this->topixEmailAddresses)){
+      throw new \ErrorException('No emails have been set.');
+    }
+
     // Convert to an array if necessary.
     if(is_string($this->topixEmailAddresses)){
       $this->topixEmailAddresses = explode(',', trim($topixEmailAddresses));
@@ -101,9 +112,29 @@ class TopixAccount {
     // Validate email addresses.
     foreach($this->topixEmailAddresses as $topixEmailAddress){
       if(!filter_var($topixEmailAddress, FILTER_VALIDATE_EMAIL)){
-        throw new ErrorException('Not a valid email address.');
+        throw new \ErrorException('Not a valid email address.');
       }
     }
+  }
+
+  /**
+   * Convert emails to TopixTopics.
+   *
+   */
+  public function convertEmailsToTopics(){
+    foreach($this->emails as $email){
+      array_push($this->topics, $this->convertEmailToTopic($email));
+    }
+  }
+
+  /**
+   * Convert a single email to a TopixTopic.
+   *
+   */
+  public function convertEmailToTopic($email){
+    $topic = new TopixTopic();
+    $topic->createFromEmail($email);
+    return $topic;
   }
 
 }
