@@ -9,13 +9,13 @@ use Ddeboer\Transcoder\Exception\UnsupportedEncodingException;
 class IconvTranscoder implements TranscoderInterface
 {
     private $defaultEncoding;
-    
+
     public function __construct($defaultEncoding = 'UTF-8')
     {
         if (!function_exists('iconv')) {
             throw new ExtensionMissingException('iconv');
         }
-        
+
         $this->defaultEncoding = $defaultEncoding;
     }
 
@@ -34,10 +34,10 @@ class IconvTranscoder implements TranscoderInterface
             },
             E_NOTICE | E_USER_NOTICE
         );
-        
-        $result = iconv($from, $to ?: $this->defaultEncoding, $string);
+        //var_dump(func_get_args());
+        $result = iconv($from === 'auto' ? 'UTF-8' : $from, $to ?: $this->defaultEncoding, $string);
         restore_error_handler();
-        
+
         return $result;
     }
 }
