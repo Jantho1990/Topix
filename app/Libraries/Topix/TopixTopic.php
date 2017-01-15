@@ -8,6 +8,9 @@ use Ddeboer\Imap\Search\Email\FromAddress;
 use Ddeboer\Imap\Search\Text\Body;
 
 class TopixTopic {
+
+  private $data = [];
+
   private $db_id = null;
   private $email_id = null;
   private $title = null;
@@ -40,7 +43,7 @@ class TopixTopic {
     }
   }
 
-  public function __get($key){
+  public function __get($key=null){
     if(is_null($key)){
       return get_object_vars($this);
     }else{
@@ -50,6 +53,10 @@ class TopixTopic {
         return null;
       }
     }
+  }
+
+  public function getAll(){
+    return $this->__get();
   }
 
   /**

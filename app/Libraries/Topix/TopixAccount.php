@@ -137,4 +137,19 @@ class TopixAccount {
     return $topic;
   }
 
+  /**
+   * Store topic into the database using Eloquent.
+   *
+   */
+  public function storeTopicEloquent($topic, $model){
+    var_dump($topic);
+    foreach($topic->topic as $t=>$topic_data){
+      if(!is_string($topic_data)){
+        $topic_data = json_encode($topic_data);
+      }
+      $model[$t] = $topic_data;
+    }
+    return $model->save();
+  }
+
 }

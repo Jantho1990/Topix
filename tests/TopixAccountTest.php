@@ -5,6 +5,8 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Libraries\Topix\TopixAccount as TopixAccount;
 
+use App\TopixTopicEloquent;
+
 class TopixAccountTest extends TestCase
 {
     /**
@@ -80,4 +82,23 @@ class TopixAccountTest extends TestCase
       $topic = $topixAccount->convertEmailToTopic($topixAccount->emails[1]);
       $this->assertFalse(is_null($topic->email_id));
     }
+
+    /**
+     * Store a topic into a database using Eloquent.
+     *
+     */
+    public function testStoreTopicinDBViaEloquent(){
+      $topixAccount = new TopixAccount(
+        env('TEST_EMAIL_DOMAIN'),
+        env('TEST_EMAIL_USERNAME'),
+        env('TEST_EMAIL_PASSWORD'),
+        ['joshua@paceintl.com', 'jantho1990@gmail.com']
+      );
+      $topixAccount->getEmails();
+      $topic = $topixAccount->convertEmailToTopic($topixAccount->emails[1]);
+      $topixTopicModel = new TopixTopicEloquent;
+      $topixAccount->storeTopicEloquent($topic->getAll(), $topixTopicModel);
+      $this->assertFalse(is_null($topixTopicModel->id));
+    }
+
 }

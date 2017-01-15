@@ -837,6 +837,7 @@ class ComposerStaticInitfb37cf8541680d20944b938c632fc9bb
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
+        'TopixTopicEloquent' => __DIR__ . '/../..' . '/database/migrations/2017_01_13_183546_TopixTopicEloquent.php',
         'Zizaco\\Entrust\\MigrationCommand' => __DIR__ . '/..' . '/zizaco/entrust/src/commands/MigrationCommand.php',
     );
 
