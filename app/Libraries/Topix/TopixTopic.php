@@ -9,9 +9,8 @@ use Ddeboer\Imap\Search\Text\Body;
 
 class TopixTopic {
 
-  private $data = [];
+  //private $data = [];
 
-  private $db_id = null;
   private $email_id = null;
   private $title = null;
   private $body = null;
@@ -56,7 +55,7 @@ class TopixTopic {
   }
 
   public function getAll(){
-    return $this->__get();
+    return $this->__get(null);
   }
 
   /**
@@ -123,16 +122,22 @@ class TopixTopic {
     $rep = [
       'tags:' => '',
       'tag:' => '',
+      'Tags:' => '',
+      'Tag:' => '',
       ', ' => ',',
       "\n" => '',
       "\r" => ''
     ];
     $tags = false;
     foreach($bodyArray as $line){
-      $cleanLine = _j::replaceAll($rep, $line);
-      if(_j::find(['tags:', 'tag:'], $cleanLine)){
+      //echo $line."p "._j::find(['tags:', 'tag:'], $line)." p\n";
+      if(_j::find(['tags:', 'tag:', 'Tags:', 'Tag:'], $line) === true){
+        //echo "$line\n";
+        $cleanLine = _j::replaceAll($rep, $line);
+        //echo $cleanLine . "\n";
         $tags = explode(',', $cleanLine);
         $body = str_replace($line, '', $body);
+        //echo "Boogers " . $line . "\n";
         break;
       }
     }
@@ -148,16 +153,20 @@ class TopixTopic {
     $rep = [
       'categories:' => '',
       'category:' => '',
+      'Categories:' => '',
+      'Category:' => '',
       ', ' => ',',
       "\n" => '',
       "\r" => ''
     ];
     $categories = false;
     foreach($bodyArray as $line){
-      $line = _j::replaceAll($rep, $line);
-      if(_j::find(['categories:', 'category:'], $line)){
-        $categories = explode(',', $categories);
+      if(_j::find(['categories:', 'category:', 'Categories:', 'Category:'], $line)){
+        //echo "Artichoke " . $line . "\n";
+        $cleanLine = _j::replaceAll($rep, $line);
+        $categories = explode(',', $cleanLine);
         $body = str_replace($line, '', $body);
+        //echo "Shark nuts " . $line . "\n";
         break;
       }
     }

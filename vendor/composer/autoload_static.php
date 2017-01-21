@@ -310,6 +310,7 @@ class ComposerStaticInitfb37cf8541680d20944b938c632fc9bb
         'CreateTopicAccountsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_06_015734_create_topic_accounts_table.php',
         'CreateTopicsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_10_135010_create_topics_table.php',
         'CreateTopixAccountsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_10_135021_create_topix_accounts_table.php',
+        'CreateTopixTopicEloquentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_13_183546_create_topix_topic_eloquents_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
@@ -837,7 +838,6 @@ class ComposerStaticInitfb37cf8541680d20944b938c632fc9bb
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
-        'TopixTopicEloquent' => __DIR__ . '/../..' . '/database/migrations/2017_01_13_183546_TopixTopicEloquent.php',
         'Zizaco\\Entrust\\MigrationCommand' => __DIR__ . '/..' . '/zizaco/entrust/src/commands/MigrationCommand.php',
     );
 

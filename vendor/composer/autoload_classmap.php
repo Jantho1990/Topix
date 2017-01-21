@@ -10,6 +10,7 @@ return array(
     'CreateTopicAccountsTable' => $baseDir . '/database/migrations/2016_11_06_015734_create_topic_accounts_table.php',
     'CreateTopicsTable' => $baseDir . '/database/migrations/2016_11_10_135010_create_topics_table.php',
     'CreateTopixAccountsTable' => $baseDir . '/database/migrations/2016_11_10_135021_create_topix_accounts_table.php',
+    'CreateTopixTopicEloquentsTable' => $baseDir . '/database/migrations/2017_01_13_183546_create_topix_topic_eloquents_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
@@ -537,6 +538,5 @@ return array(
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
-    'TopixTopicEloquent' => $baseDir . '/database/migrations/2017_01_13_183546_TopixTopicEloquent.php',
     'Zizaco\\Entrust\\MigrationCommand' => $vendorDir . '/zizaco/entrust/src/commands/MigrationCommand.php',
 );

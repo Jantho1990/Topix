@@ -95,9 +95,9 @@ class TopixAccountTest extends TestCase
         ['joshua@paceintl.com', 'jantho1990@gmail.com']
       );
       $topixAccount->getEmails();
-      $topic = $topixAccount->convertEmailToTopic($topixAccount->emails[1]);
+      $topic = $topixAccount->convertEmailToTopic($topixAccount->emails[6]);
       $topixTopicModel = new TopixTopicEloquent;
-      $topixAccount->storeTopicEloquent($topic->getAll(), $topixTopicModel);
+      $topixAccount->storeTopicEloquent($topic, $topixTopicModel);
       $this->assertFalse(is_null($topixTopicModel->id));
     }
 

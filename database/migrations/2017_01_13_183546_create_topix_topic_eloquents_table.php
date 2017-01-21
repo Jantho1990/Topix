@@ -17,9 +17,10 @@ class CreateTopixTopicEloquentsTable extends Migration
             $table->increments('id');
             $table->string('email_id');
             $table->string('title');
-            $table->string('body');
+            $table->longtext('body');
             $table->string('categories');
             $table->string('tags');
+            $table->string('date');
             $table->timestamps();
         });
     }

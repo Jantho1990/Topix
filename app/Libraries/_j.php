@@ -11,6 +11,7 @@ class _j {
   * @return String
   */
   public static function replaceAll($keyvals, $str){
+    //echo "replace all\n";
     $ret = $str;
     foreach($keyvals as $key=>$val){
       $ret = str_replace($key, $val, $ret);
@@ -26,10 +27,14 @@ class _j {
   * @return Boolean
   */
   public static function find($find, $str, $all = false){
-    if(is_string($find)){trim($find = explode(',', $find));}
+    //echo "find $str : ";
+    if(is_string($find)){
+      $find = explode(',', trim($find));
+    }
     $found = false;
     foreach($find as $val){
-      if(!strpos($str, $val)){
+      //echo substr($str, 0, 5) . "\n";
+      if(strpos($str, $val) === false){
         $found = false;
         if($all === true){break;}
       }else{
@@ -37,6 +42,7 @@ class _j {
         if($all === false){break;}
       }
     }
+    //echo "\n";
     return $found;
   }
 

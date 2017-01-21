@@ -29,13 +29,16 @@ class IconvTranscoder implements TranscoderInterface
                 if (1 === preg_match('/Wrong charset, conversion (.+) is/', $message, $matches)) {
                     throw new UnsupportedEncodingException($matches[1], $message);
                 } else {
+                  //echo $from . "\n";
+                    echo mb_detect_encoding($string);
                     throw new IllegalCharacterException($string, $message);
                 }
             },
             E_NOTICE | E_USER_NOTICE
         );
         //var_dump(func_get_args());
-        $result = iconv($from === 'auto' ? 'UTF-8' : $from, $to ?: $this->defaultEncoding, $string);
+        //echo $from . "\n";
+        $result = iconv($from === 'us-ascii' ? 'ISO-8859-1' : $from, $to ?: $this->defaultEncoding, $string);
         restore_error_handler();
 
         return $result;

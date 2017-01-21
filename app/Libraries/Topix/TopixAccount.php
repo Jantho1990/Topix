@@ -8,6 +8,7 @@ use Ddeboer\Imap\Search\Email\FromAddress;
 use Ddeboer\Imap\Search\Text\Body;
 
 use App\Libraries\Topix\TopixTopic;
+use App\TopixTopicEloquent;
 
 // TopixAccount: the mailbox which you are sending Topix emails to.
 
@@ -21,6 +22,8 @@ class TopixAccount {
   private $emails = null;
   private $topics = null;
 
+  private $enable_log = false;
+
   public function __construct(){
     $arguments = func_get_args();
     $this->emails = [];
@@ -29,6 +32,15 @@ class TopixAccount {
       $this->__set($arguments);
       $this->getAuthenticatedConnection($this->domain, $this->username, $this->password);
     }
+  }
+
+  /**
+   * Enable or disable progress reporting.
+   * @param $bool True/False
+   * @return void
+   */
+  public function toggleLogs($bool){
+    $this->enable_log = (bool)$bool;
   }
 
   public function __set($key, $val=null){
@@ -122,8 +134,12 @@ class TopixAccount {
    *
    */
   public function convertEmailsToTopics(){
+    $log_ct = 0;
     foreach($this->emails as $email){
       array_push($this->topics, $this->convertEmailToTopic($email));
+      if($this->enable_log === true){
+        echo $log_ct++ . " emails converted. \n";
+      }
     }
   }
 
@@ -141,15 +157,30 @@ class TopixAccount {
    * Store topic into the database using Eloquent.
    *
    */
-  public function storeTopicEloquent($topic, $model){
-    var_dump($topic);
-    foreach($topic->topic as $t=>$topic_data){
+  public function storeTopicEloquent($topic, $topixTopicModel = null){
+    //var_dump($topic);
+    $model = $topixTopicModel !== null ? $topixTopicModel : new TopixTopicEloquent;
+    foreach($topic->getAll() as $t=>$topic_data){
       if(!is_string($topic_data)){
         $topic_data = json_encode($topic_data);
       }
       $model[$t] = $topic_data;
     }
     return $model->save();
+  }
+
+  /**
+   * Store all topics into a database using Eloquent.
+   *
+   */
+  public function storeTopicsEloquent(){
+    $log_ct = 0;
+    foreach($this->topics as $topic){
+      $this->storeTopicEloquent($topic);
+      if($this->enable_log === true){
+        echo $log_ct++ . " topics stored to DB. \n";
+      }
+    }
   }
 
 }
