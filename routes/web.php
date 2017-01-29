@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/test1', function(){
+  return view('mockups.test1');
+});
+Route::get('/test2', function(){
+  return view('mockups.test2');
+});
