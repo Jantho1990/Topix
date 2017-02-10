@@ -313,6 +313,7 @@ class ComposerStaticInitfb37cf8541680d20944b938c632fc9bb
         'CreateTopixTopicEloquentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_13_183546_create_topix_topic_eloquents_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
+        'EntrustSetupTables' => __DIR__ . '/../..' . '/database/migrations/2017_02_10_061311_entrust_setup_tables.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',

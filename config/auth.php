@@ -69,6 +69,9 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
             'table' => 'users',
+            'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
+            'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
+            'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
         ],
 
         // 'users' => [
